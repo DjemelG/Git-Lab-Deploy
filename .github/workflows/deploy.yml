@@ -13,9 +13,12 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
-      
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v3
+      - name: npm audit
+        run: |
+          npm ci
+          npm audit --audit-level=moderate
       - name: Build image
         run: |
           docker build -t myapp:latest .
