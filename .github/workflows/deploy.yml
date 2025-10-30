@@ -9,6 +9,10 @@ jobs:
       - name: Build image
         run: |
           docker build -t myapp:latest .
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
       - name: Push to ACR
         run: |
           az acr login -n sslablabacrdg
@@ -23,7 +27,4 @@ jobs:
           --container-registry-url https://sslablabacrdg.azurecr.io \
           --container-registry-user ${{secrets.ACR_USER}} \
           --container-registry-password ${{secrets.ACR_PWD}}
-      - name: Sign in to Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{secrets.AZURE_CREDENTIALS}}
+
